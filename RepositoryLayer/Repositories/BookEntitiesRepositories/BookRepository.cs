@@ -7,23 +7,33 @@ namespace RepositoryLayer.Repositories.BookEntitiesRepositories
 {
     public class BookRepository : Repository<Book>, IBookRepository
     {
-        private readonly AppDbContext _context;
         private readonly DbSet<Book> _books;
 
         public BookRepository(AppDbContext context) : base(context)
         {
-            _context = context;
             _books = _context.Set<Book>();
         }
 
-        async Task<List<Book>> IBookRepository.GetAllBooksWithAuthorsAndImagesAsync()
+        async Task<List<Book>> IBookRepository.GetAllAsync()
         {
-            var a = await _books
+            return await _books
+                .Include(b => b.BookImages)
                 .Include(b => b.BookAuthors)
                 .ThenInclude(a => a.Author)
-                .Include(b => b.BookImages)
                 .ToListAsync();
-            return a;
+        }
+
+        async Task<Book> IBookRepository.GetByIdAsync(int id)
+        {
+            return await _books.Where(b => b.Id == id)
+                .Include(b => b.BlogBooks).ThenInclude(b => b.Blog)
+                .Include(b => b.BookAuthors).ThenInclude(a => a.Author)
+                .Include(b => b.BookGenres).ThenInclude(b => b.Genre)
+                .Include(b => b.BookLanguages).ThenInclude(b => b.Language)
+                .Include(b => b.BookTags).ThenInclude(b => b.Tag)
+                .Include(b => b.Category).Include(b => b.BookDetails)
+                .Include(b => b.BookImages)
+                .FirstOrDefaultAsync();
         }
     }
 }

@@ -4,6 +4,7 @@ namespace ServiceLayer.Services.Interfaces
 {
     public interface IBookService
     {
-        Task<List<BookDTO>> GetAllBooksWithAuthorsAndImagesAsync();
+        Task<List<BookDTO>> GetAllAsync();
+        Task<BookDetailsDTO> GetByIdAsync(int id);
     }
 }

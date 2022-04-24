@@ -9,7 +9,7 @@ namespace RepositoryLayer.Repositories.Interfaces
 
         Task<IEnumerable<T>> GetAllByConditionAsync(Expression<Func<T, bool>> predicate);
 
-        Task<List<T>> GetAllAsync();
+        Task<List<T>> ReadAllAsync();
 
         Task UpdateAsync(T entity);
 

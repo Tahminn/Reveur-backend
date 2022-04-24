@@ -9,7 +9,7 @@ namespace ServiceLayer.Services.BookEntitiesServices
     public class BookService : IBookService
     {
         private readonly IBookRepository _bookRepository;
-        private readonly IMapper _mapper;
+        internal readonly IMapper _mapper;
 
         public BookService(IBookRepository bookRepository,
                                            IMapper mapper)
@@ -18,11 +18,14 @@ namespace ServiceLayer.Services.BookEntitiesServices
             _mapper = mapper;
         }
 
-        public async Task<List<BookDTO>> GetAllBooksWithAuthorsAndImagesAsync()
+        public async Task<List<BookDTO>> GetAllAsync()
         {
-            List<Book> books = await _bookRepository.GetAllBooksWithAuthorsAndImagesAsync();
-            var mappedData = _mapper.Map<List<BookDTO>>(books);
-            return mappedData;
+            return _mapper.Map<List<BookDTO>>(await _bookRepository.GetAllAsync());
+        }
+
+        public async Task<BookDetailsDTO> GetByIdAsync(int id)
+        {
+            return _mapper.Map<BookDetailsDTO>(await _bookRepository.GetByIdAsync(id));
         }
 
     }

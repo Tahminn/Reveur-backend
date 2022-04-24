@@ -16,7 +16,14 @@ namespace Api.Controllers
         [Route("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _bookService.GetAllBooksWithAuthorsAndImagesAsync());
+            return Ok(await _bookService.GetAllAsync());
+        }
+
+        [HttpGet]
+        [Route("GetDetails/{id}")]
+        public async Task<IActionResult> GetById([FromRoute]int id)
+        {
+            return Ok(await _bookService.GetByIdAsync(id));
         }
     }
 }

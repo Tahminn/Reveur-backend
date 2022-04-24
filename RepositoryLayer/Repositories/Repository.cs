@@ -8,7 +8,7 @@ namespace RepositoryLayer.Repositories
 {
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly AppDbContext _context;
+        internal readonly AppDbContext _context;
         private readonly DbSet<T> _entities;
 
         public Repository(AppDbContext context)
@@ -32,7 +32,7 @@ namespace RepositoryLayer.Repositories
             return await _entities.Where(predicate).ToListAsync();
         }
 
-        public async Task<List<T>> GetAllAsync()
+        public async Task<List<T>> ReadAllAsync()
         {
             return await _entities.ToListAsync();
         }

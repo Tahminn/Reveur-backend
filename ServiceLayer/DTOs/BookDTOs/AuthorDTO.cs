@@ -8,6 +8,7 @@ namespace ServiceLayer.DTOs.BookDTOs
 {
     public class AuthorDTO
     {
+        // please remove one side of all many to many if not used
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime DateCreated { get; set; }
